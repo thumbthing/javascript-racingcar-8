@@ -17,4 +17,18 @@ describe("변환", () => {
     expect(CAR_LIST).toContain('true');
     expect(CAR_LIST).toContain('익명');
   });
+
+  test("문자를 숫자로 변환",  () => {
+    // given
+    const ATTEMPT_INPUT = ['9', '10', '999', '한번', 'twice'];
+    const PARSER = new ParseInput();
+
+    // expect
+    const PARSED_INPUT = [9, 10, 999, NaN, NaN];
+
+    // then
+    ATTEMPT_INPUT.forEach((input, index) => {
+      expect(PARSER.getAttempts(input)).toBe(PARSED_INPUT[index]);
+    }, PARSED_INPUT)
+  });
 });
