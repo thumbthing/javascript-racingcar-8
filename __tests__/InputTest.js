@@ -17,10 +17,23 @@ describe("입력", () => {
     mockQuestions(INPUT);
 
     // when
-    const CAR_INPUT = new UserInput();
-    const CAR_NAMES = await CAR_INPUT.getCarName();
+    const USER_INPUT = new UserInput();
+    const CAR_NAMES = await USER_INPUT.getCarName();
 
     // then
     await expect(CAR_NAMES).toBe("jackson,prince,acdc");
+  });
+
+  test("시도 횟수를 입력 받고 입력 받은 값을 반환한다", async () => {
+    // given
+    const INPUT = ['9'];
+    mockQuestions(INPUT);
+
+    // when
+    const USER_INPUT = new UserInput();
+    const ATTEMPTS = await USER_INPUT.getRaceCount();
+
+    // then
+    await expect(ATTEMPTS).toBe('9');
   });
 });

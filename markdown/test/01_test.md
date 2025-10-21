@@ -3,13 +3,18 @@
 ## 테스트 목록
 
 1. 입력
-    - `CarInput()`
+    - `getCarName()`
+    - `getRaceCount()`
 2. 변환
     - `ParseInput()`
 
 ### Input
 
-#### `CarInput()`
+#### `getCarName()`
+
+- 입력 값에 대한 반환
+
+#### `getRaceCount()`
 
 - 입력 값에 대한 반환
 
