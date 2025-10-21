@@ -6,7 +6,10 @@
     - `getCarName()`
     - `getRaceCount()`
 2. 변환
-    - `ParseInput()`
+    - `getCarList()`
+    - `getAttempts()`
+3. 유효성
+    - `carName()`
 
 ### Input
 
@@ -22,7 +25,19 @@
 
 ### Parse
 
-#### `ParseInput()`
+#### `getCarList()`
+
+- 입력 값을 변환된 배열로 반환
+
+#### `getAttempts()`
+
+- 입력 값을 숫자로 형변환
+
+---
+
+### Valid
+
+#### `carName()`
 
 - 요소 내에 5글자 이상의 자동차명에 대한 `Error throw`
 - 요소 내에 빈 문자열의 자동차명에 대한 `Error throw`
