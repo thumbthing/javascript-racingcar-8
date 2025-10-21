@@ -11,4 +11,10 @@ export class UserInput {
     const INPUT = await this.getInput(NOTICE);
     return INPUT;
   }
+
+  async getRaceCount() {
+    const NOTICE = "시도할 횟수는 몇 회인가요?";
+    const INPUT = await this.getInput(NOTICE);
+    return INPUT;
+  }
 }
