@@ -4,6 +4,8 @@
 
 ## 기능
 
+[상세 기능 목록](./markdown/feature/01_feature_list.md)
+
 ### 기능 흐름
 
 #### 초안

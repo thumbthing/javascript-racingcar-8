@@ -96,4 +96,3 @@ VSCode: ⇧⌥F, Shift+Alt+F
 #### JavaScript API를 적극 활용
 
 함수(메서드)를 직접 구현하기 전에 API에서 해당 함수를 제공하는지 확인힌다.
-
