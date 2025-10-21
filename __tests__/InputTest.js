@@ -1,5 +1,5 @@
 import { Console } from "@woowacourse/mission-utils"
-import { CarInput } from "../src/input/Input";
+import { UserInput } from "../src/input/Input";
 
 const mockQuestions = (inputs) => {
   Console.readLineAsync = jest.fn();
@@ -17,10 +17,10 @@ describe("입력", () => {
     mockQuestions(INPUT);
 
     // when
-    const CAR_INPUT = new CarInput();
-    const CAR_NAME = await CAR_INPUT.getName();
+    const CAR_INPUT = new UserInput();
+    const CAR_NAMES = await CAR_INPUT.getCarName();
 
     // then
-    await expect(CAR_NAME).toBe("jackson,prince,acdc");
+    await expect(CAR_NAMES).toBe("jackson,prince,acdc");
   });
 });
