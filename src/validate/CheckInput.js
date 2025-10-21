@@ -1,7 +1,7 @@
 export class CheckInput {
   carName(carList) {
     const IS_VALID = carList.every((car) => {
-      car.length <= 5;
+      return car.length <= 5 && car.length > 0;
     });
 
     if (IS_VALID === false) {
