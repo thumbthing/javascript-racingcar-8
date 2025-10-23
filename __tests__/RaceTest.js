@@ -52,4 +52,22 @@ describe("레이스", () => {
       expect(RACE_RECORD.get(car)).toBe(EXPECTED_RACE_RECORD.get(car));
     });
   });
+
+  test("필드 값의 기록으로 문자열 생성", () => {
+    // given
+    const CAR_LIST = ["aaa", "bbb", "ccc", "ddd"];
+    const ATTEMPT_COUNT = 1;
+    const RANDOM_NUMBER = [0, 4, 3, 5];
+    const EXPECTED_RECORD_STRING = `${["aaa : ", "bbb : -", "ccc : ", "ddd : -"].join("\n")}\n`;
+
+    MOCK_RANDOM_NUMBER(RANDOM_NUMBER);
+
+    // when
+    const RACE = new Race(CAR_LIST, ATTEMPT_COUNT);
+    RACE.updateRecord();
+    const RECORD_STRING = RACE.createRecordString();
+
+    // then
+    expect(RECORD_STRING).toBe(EXPECTED_RECORD_STRING);
+  });
 });
