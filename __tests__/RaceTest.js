@@ -27,4 +27,29 @@ describe("레이스", () => {
       expect(RACE.getCondition()).toBe(result);
     });
   });
+
+  test("생성된 boolean 값으로 레이스 결과 최신화", () => {
+    // given
+    const CAR_LIST = ["aaa", "bbb", "ccc", "ddd"];
+    const ATTEMPT_COUNT = 1;
+    const RANDOM_NUMBER = [0, 4, 3, 5];
+    const EXPECTED_RACE_RECORD = new Map([
+      ["aaa",""],
+      ["bbb","-"],
+      ["ccc",""],
+      ["ddd","-"]
+    ])
+
+    MOCK_RANDOM_NUMBER(RANDOM_NUMBER);
+
+    // when
+    const RACE = new Race(CAR_LIST, ATTEMPT_COUNT);
+    RACE.updateRecord();
+    const RACE_RECORD = RACE.raceRecord;
+
+    // then
+    CAR_LIST.forEach((car) => {
+      expect(RACE_RECORD.get(car)).toBe(EXPECTED_RACE_RECORD.get(car));
+    });
+  });
 });
