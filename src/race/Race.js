@@ -1,4 +1,4 @@
-import { Random } from "@woowacourse/mission-utils";
+import { Console, Random } from "@woowacourse/mission-utils";
 
 export class Race {
 
@@ -35,5 +35,16 @@ export class Race {
     })
     const RECORD_STRING = `${RECORD.join('\n')}\n`;
     return RECORD_STRING;
+  }
+
+  // 시도할 횟수 만큼 반복
+  run() {
+    Console.print("\n실행 결과\n");
+
+    for (let count = 0; count < this.attemptCount; count++) {
+      this.updateRecord()
+      const RECORD_STRING = this.createRecordString();
+      Console.print(RECORD_STRING);
+    }
   }
 }
