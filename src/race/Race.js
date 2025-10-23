@@ -27,4 +27,13 @@ export class Race {
       } 
     })
   }
+
+  // 결과 문자열 생성
+  createRecordString() {
+    const RECORD = this.carList.map((car) => {
+      return `${car} : ${this.raceRecord.get(car)}`
+    })
+    const RECORD_STRING = `${RECORD.join('\n')}\n`;
+    return RECORD_STRING;
+  }
 }
