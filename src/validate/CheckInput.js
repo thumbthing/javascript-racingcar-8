@@ -12,7 +12,7 @@ export class CheckInput {
   attemptCount(attemptCount) {
     const IS_NaN = Number.isNaN(attemptCount);
     const IS_TOO_SMALL = attemptCount <= 0;
-    const IS_DICIMAL = Number.isInteger(attemptCount);
+    const IS_DICIMAL = Math.floor(attemptCount) !== attemptCount || Math.ceil(attemptCount) !== attemptCount;
 
     if (IS_NaN || IS_TOO_SMALL || IS_DICIMAL) {
       throw new Error("[ERROR]");
