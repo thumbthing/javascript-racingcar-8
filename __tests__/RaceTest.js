@@ -99,4 +99,38 @@ describe("레이스", () => {
       expect(LOG_SPY).toHaveBeenCalledWith(expect.stringContaining(log))
     })
   });
+
+  test("우승자 목록 생성", () => {
+    // given
+    const CAR_LIST = ["aaa", "bbb"];
+    const ATTEMPT_COUNT = 3;
+    const RANDOM_NUMBER = [0, 4, 0, 4, 0, 4];
+    const EXPECTED_RESULT = "최종 우승자 : bbb";
+    const LOG_SPY = GET_LOG_SPY();
+
+    MOCK_RANDOM_NUMBER(RANDOM_NUMBER);
+    // when
+    const RACE = new Race(CAR_LIST, ATTEMPT_COUNT);
+    RACE.run();
+
+    // then
+    expect(LOG_SPY).toHaveBeenLastCalledWith(EXPECTED_RESULT);
+  });
+
+  test("여러명의 우승자 목록 생성", () => {
+    // given
+    const CAR_LIST = ["aaa", "bbb", "ccc", "ddd"];
+    const ATTEMPT_COUNT = 3;
+    const RANDOM_NUMBER = [4, 4, 4, 0, 4, 4, 4, 0, 4, 4, 4, 0];
+    const EXPECTED_RESULT = "최종 우승자 : aaa, bbb, ccc";
+    const LOG_SPY = GET_LOG_SPY();
+
+    MOCK_RANDOM_NUMBER(RANDOM_NUMBER);
+    // when
+    const RACE = new Race(CAR_LIST, ATTEMPT_COUNT);
+    RACE.run();
+
+    // then
+    expect(LOG_SPY).toHaveBeenLastCalledWith(EXPECTED_RESULT);
+  });
 });
