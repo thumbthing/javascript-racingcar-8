@@ -1,4 +1,4 @@
-import { Random } from "@woowacourse/mission-utils";
+import { Console, Random } from "@woowacourse/mission-utils";
 import { Race } from "../src/race/Race";
 
 const MOCK_RANDOM_NUMBER = (numbers) => {
@@ -7,6 +7,12 @@ const MOCK_RANDOM_NUMBER = (numbers) => {
   numbers.reduce((acc, number) => {
     return acc.mockReturnValueOnce(number);
   }, Random.pickNumberInRange);
+}
+
+const GET_LOG_SPY = () => {
+  const LOG_SPY = jest.spyOn(Console, "print");
+  LOG_SPY.mockClear();
+  return LOG_SPY;
 }
 
 describe("레이스", () => {
@@ -69,5 +75,28 @@ describe("레이스", () => {
 
     // then
     expect(RECORD_STRING).toBe(EXPECTED_RECORD_STRING);
+  });
+
+  test("시행 횟수 만큼 생성된 레이스 실행-결과 출력", () => {
+    // given
+    const CAR_LIST = ["aaa", "bbb", "ccc", "ddd"];
+    const ATTEMPT_COUNT = 2;
+    const RANDOM_NUMBER = [0, 4, 3, 5, 9, 1, 8, 7];
+    const INITIAL_STRING = "\n실행 결과\n"
+    const EXPECTED_FIRST_RECORD_STRING = `${["aaa : ", "bbb : -", "ccc : ", "ddd : -"].join("\n")}\n`;
+    const EXPECTED_SECOND_RECORD_STRING = `${["aaa : -", "bbb : -", "ccc : -", "ddd : --"].join("\n")}\n`;
+    const EXPECTED_RECORD_STRING = [INITIAL_STRING, EXPECTED_FIRST_RECORD_STRING, EXPECTED_SECOND_RECORD_STRING];
+    const LOG_SPY = GET_LOG_SPY();
+
+    MOCK_RANDOM_NUMBER(RANDOM_NUMBER);
+
+    // when
+    const RACE = new Race(CAR_LIST, ATTEMPT_COUNT);
+    RACE.run();
+
+    // then
+    EXPECTED_RECORD_STRING.forEach((log) => {
+      expect(LOG_SPY).toHaveBeenCalledWith(expect.stringContaining(log))
+    })
   });
 });
