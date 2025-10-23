@@ -37,6 +37,21 @@ export class Race {
     return RECORD_STRING;
   }
 
+  // 우승자 선별
+  getWinner() {
+    const RECORD_COUNT = [...this.raceRecord.values()].map((record) => record.length);
+    const MAX_RECORD = Math.max(...RECORD_COUNT);
+    const WINNER = [];
+    this.carList.forEach((car) => {
+      const RECORD = this.raceRecord.get(car);
+      if (RECORD.length === MAX_RECORD) {
+        WINNER.push(car);
+      }
+    });
+    const RESULT_STRING = `최종 우승자 : ${WINNER.join(', ')}`;
+    Console.print(RESULT_STRING);
+  }
+
   // 시도할 횟수 만큼 반복
   run() {
     Console.print("\n실행 결과\n");
@@ -46,5 +61,7 @@ export class Race {
       const RECORD_STRING = this.createRecordString();
       Console.print(RECORD_STRING);
     }
+
+    this.getWinner();
   }
 }
