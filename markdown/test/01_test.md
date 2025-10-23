@@ -39,8 +39,10 @@
 
 #### `carName()`
 
-- 요소 내에 5글자 이상의 자동차명에 대한 `Error throw`
-- 요소 내에 빈 문자열의 자동차명에 대한 `Error throw`
+- 빈값, 2개 미만의 자동차 이름에 대한 `Error throw`
+- 중복된 자동차 이름에 대한 `Error throw`
+- 요소 내에 5글자 이상의 자동차 이름에 대한 `Error throw`
+- 요소 내에 빈 문자열의 자동차 이름에 대한 `Error throw`
 - 요소 내의 글자의 길이가 1 이상, 5이하일 경우 유효성 통과
 
 #### `attemptCount()`
