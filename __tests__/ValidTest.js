@@ -32,5 +32,27 @@ describe("유효성", () => {
 
     // then
     expect(() => CHECK_INPUT.carName(VALID_CAR_LIST)).not.toThrow("[ERROR]")
+  });
+
+  test.each([NaN, 0, -1, 1.1])("Number로 변환된 시도 횟수가 유효하지 않을 경우 error를 발생", (input) => {
+    // given
+    const INVALID_ATTEMPT_INPUT = input;
+
+    // when
+    const CHECK_INPUT = new CheckInput();
+
+    // then
+    expect(() => CHECK_INPUT.attemptCount(INVALID_ATTEMPT_INPUT)).toThrow("[ERROR]")
+  });
+
+  test.each([1, 22, 3000, 999999999])("Number로 변횐된 시도 횟수가 유효할 경우 유효성 검사를 통과한다", (input) => {
+    // given
+    const VALID_ATTEMPT = input
+
+    // when
+    const CHECK_INPUT = new CheckInput();
+
+    // then
+    expect(() => CHECK_INPUT.attemptCount(VALID_ATTEMPT)).not.toThrow();
   })
 });
