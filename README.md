@@ -92,28 +92,56 @@
 
 #### `CheckInput` : 검증
 
+##### `INPUT_ERROR` : 전역 상수
+
+- `에러의 종류 : 출력할 메시지` 형식의 데이터
+
+##### 초기 필드
+
+- `errorStatus` 필드 초기화
+  - `error 이름: false`로 이루어진 `Map`으로 초기화
+
+##### `initializeStatus()` : 필드 초기화
+
+1. 기존의 `errorStatus` 필드의 key들을 배열로 복사하여 선언
+2. 복사된 key들을 순회
+    - `key: false`로 필드 값 초기화
+
+##### `updateErrorStatusByCarList()` : 자동차 입력값으로 필드 최신화
+
+1. `lessThenTwoCar, inCorrectLength, notUniqueCarName`의 value를 최신화한다
+    - 배열의 길이가 2 미만일 경우
+    - 배열내 요소 중 하나라도 글자수 6 이상, 0 이하일 경우
+    - 배열의 길이가 `new Set().size`로 중복 요소 제거된 길이보다 길 경우
+
+##### `updateErrorStatusByAttempt()` : 시도 횟수 입력값으로 필드 최신화
+
+1. `notNumber, tooSmall, decimal`의 value를 최신화한다
+    - 변환된 값이 `NaN`인 경우
+    - 변환된 값이 0 이하일 경우
+    - 변환된 값이 소수일 경우
+
 ##### `carList(변환된 자동차 이름 배열)` : 자동차 입력값 검증
 
-1. 배열로 변한된 배열의 길이를 확인한다
-    - 배열의 길이가 1을 초과하는지 확인한다
-2. 배열로 변환된 배열을 순회한다
-    - `every()`로 순회한다
-      - 자동차 이름이 5글자 이하일 경우 다음 요소를 확인한다
-        - 마지막 요소까지 유효하면 `true`를 반환한다
-      - 자동차 이름이 5글자를 초과할 경우 `false`를 반환하고 순회는 중지된다
-      - 자동차 이름이 빈 문자열일 경우 `false`를 반환하고 순회는 중지된다
-3. 배열내 요소에 중복된 요소가 존재하는지 확인한다
-    - 변환된 배열의 길이와 `new Set().size`의 길이가 같은지 확인한다.
-4. 모든 결과가 전부 `true`인지 확인한다
-5. 결과가 `false`일 경우 `Error`를 생성하고 `throw`한다
+1. `errorStatus.keys()`로 key로 이루어진 배열을 복사하여 생성한다
+2. `updateErrorStatusByCarList()`로 필드값을 최신화한다
+3. `Array.some()`으로 복사된 배열을 순회한다
+    - 최신화된 필드값중에 `true` 값이 존재하는지 확인한다
+    - 필드의 value 값중에 `true`가 존재할 경우
+    - 화면에 전역 상수로 선언한 `INPUT_ERROR`의 value 값을 출력한다
+    - `intializeStatus()`로 최신화된 필드값을 초기화한다
+    - `[ERROR]`를 throw 한다
 
 ##### `attemptCount(변환된 시도 횟수)` : 시도 횟수 입력값 검증
 
-1. `Number`로 변환된 입력값을 검사한다.
-    - `NaN`인 경우
-    - 0 보다 작은 경우
-    - 소수인 경우
-2. 검사한 3개의 항목중에 하나라도 해당할 경우 Error를 생성하고 `throw` 한다
+1. `errorStatus.keys()`로 key로 이루어진 배열을 복사하여 생성한다
+2. `updateErrorStatusByAttempt()`로 필드값을 최신화한다
+3. `Array.some()`으로 복사된 배열을 순회한다
+    - 최신화된 필드값중에 `true` 값이 존재하는지 확인한다
+    - 필드의 value 값중에 `true`가 존재할 경우
+    - 화면에 전역 상수로 선언한 `INPUT_ERROR`의 value 값을 출력한다
+    - `intializeStatus()`로 최신화된 필드값을 초기화한다
+    - `[ERROR]`를 throw 한다
 
 ---
 
@@ -339,7 +367,7 @@
 
 ##### feat, refactor
 
-- [ ] checkInput : 에러 처리 기능 세분화
+- [x] checkInput : 에러 처리 기능 세분화
 - [x] race : getWinner 관심사 분리
 - [x] app : 기능들 모듈화
 - [x] 메서드-클래스 명 구체화
