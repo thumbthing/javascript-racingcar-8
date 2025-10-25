@@ -1,7 +1,7 @@
 import { Console, Random } from "@woowacourse/mission-utils";
 import { Race } from "../src/race/Race";
 
-const MOCK_RANDOM_NUMBER = (numbers) => {
+const mockRandomNumber = (numbers) => {
   Random.pickNumberInRange = jest.fn();
 
   numbers.reduce((acc, number) => {
@@ -9,175 +9,175 @@ const MOCK_RANDOM_NUMBER = (numbers) => {
   }, Random.pickNumberInRange);
 }
 
-const GET_LOG_SPY = () => {
-  const LOG_SPY = jest.spyOn(Console, "print");
-  LOG_SPY.mockClear();
-  return LOG_SPY;
+const getLogSpy = () => {
+  const logSpy = jest.spyOn(Console, "print");
+  logSpy.mockClear();
+  return logSpy;
 }
 
 describe("레이스", () => {
   test("전진 조건의 boolean 값 생성", () => {
     // given
-    const CAR_LIST = ["aaa", "bbb", "ccc", "ddd"];
-    const ATTEMPT_COUNT = 1;
-    const RANDOM_NUMBER = [0, 4, 3, 5];
-    const EXPECTED_RESULT = [false, true, false, true];
+    const carList = ["aaa", "bbb", "ccc", "ddd"];
+    const attemptCount = 1;
+    const randomNumber = [0, 4, 3, 5];
+    const expectedResult = [false, true, false, true];
 
-    MOCK_RANDOM_NUMBER(RANDOM_NUMBER);
+    mockRandomNumber(randomNumber);
 
     // when
-    const RACE = new Race(CAR_LIST, ATTEMPT_COUNT);
+    const race = new Race(carList, attemptCount);
 
     // then
-    EXPECTED_RESULT.forEach((result) => {
-      expect(RACE.getCondition()).toBe(result);
+    expectedResult.forEach((result) => {
+      expect(race.getCondition()).toBe(result);
     });
   });
 
   test("생성된 boolean 값으로 레이스 결과 최신화", () => {
     // given
-    const CAR_LIST = ["aaa", "bbb", "ccc", "ddd"];
-    const ATTEMPT_COUNT = 1;
-    const RANDOM_NUMBER = [0, 4, 3, 5];
-    const EXPECTED_RACE_RECORD = new Map([
+    const carList = ["aaa", "bbb", "ccc", "ddd"];
+    const attemptCount = 1;
+    const randomNumber = [0, 4, 3, 5];
+    const expectedRaceRecord = new Map([
       ["aaa",""],
       ["bbb","-"],
       ["ccc",""],
       ["ddd","-"]
     ])
 
-    MOCK_RANDOM_NUMBER(RANDOM_NUMBER);
+    mockRandomNumber(randomNumber);
 
     // when
-    const RACE = new Race(CAR_LIST, ATTEMPT_COUNT);
-    RACE.updateRecord();
-    const RACE_RECORD = RACE.raceRecord;
+    const race = new Race(carList, attemptCount);
+    race.updateRecord();
+    const raceRecord = race.raceRecord;
 
     // then
-    CAR_LIST.forEach((car) => {
-      expect(RACE_RECORD.get(car)).toBe(EXPECTED_RACE_RECORD.get(car));
+    carList.forEach((car) => {
+      expect(raceRecord.get(car)).toBe(expectedRaceRecord.get(car));
     });
   });
 
   test("필드 값의 기록으로 문자열 생성", () => {
     // given
-    const CAR_LIST = ["aaa", "bbb", "ccc", "ddd"];
-    const ATTEMPT_COUNT = 1;
-    const RANDOM_NUMBER = [0, 4, 3, 5];
-    const EXPECTED_RECORD_STRING = `${["aaa : ", "bbb : -", "ccc : ", "ddd : -"].join("\n")}\n`;
+    const carList = ["aaa", "bbb", "ccc", "ddd"];
+    const attemptCount = 1;
+    const randomNumber = [0, 4, 3, 5];
+    const expectedRecordString = `${["aaa : ", "bbb : -", "ccc : ", "ddd : -"].join("\n")}\n`;
 
-    MOCK_RANDOM_NUMBER(RANDOM_NUMBER);
+    mockRandomNumber(randomNumber);
 
     // when
-    const RACE = new Race(CAR_LIST, ATTEMPT_COUNT);
-    RACE.updateRecord();
-    const RECORD_STRING = RACE.createRecordString();
+    const race = new Race(carList, attemptCount);
+    race.updateRecord();
+    const recordString = race.createRecordString();
 
     // then
-    expect(RECORD_STRING).toBe(EXPECTED_RECORD_STRING);
+    expect(recordString).toBe(expectedRecordString);
   });
 
   test("시행 횟수 만큼 생성된 레이스 실행-결과 출력", () => {
     // given
-    const CAR_LIST = ["aaa", "bbb", "ccc", "ddd"];
-    const ATTEMPT_COUNT = 2;
-    const RANDOM_NUMBER = [0, 4, 3, 5, 9, 1, 8, 7];
-    const INITIAL_STRING = "\n실행 결과\n"
-    const EXPECTED_FIRST_RECORD_STRING = `${["aaa : ", "bbb : -", "ccc : ", "ddd : -"].join("\n")}\n`;
-    const EXPECTED_SECOND_RECORD_STRING = `${["aaa : -", "bbb : -", "ccc : -", "ddd : --"].join("\n")}\n`;
-    const EXPECTED_RECORD_STRING = [INITIAL_STRING, EXPECTED_FIRST_RECORD_STRING, EXPECTED_SECOND_RECORD_STRING];
-    const LOG_SPY = GET_LOG_SPY();
+    const carList = ["aaa", "bbb", "ccc", "ddd"];
+    const attemptCount = 2;
+    const randomNumber = [0, 4, 3, 5, 9, 1, 8, 7];
+    const initialString = "\n실행 결과\n"
+    const expectedFirstRecordString = `${["aaa : ", "bbb : -", "ccc : ", "ddd : -"].join("\n")}\n`;
+    const expectedSecondRecordString = `${["aaa : -", "bbb : -", "ccc : -", "ddd : --"].join("\n")}\n`;
+    const expectedRecordString = [initialString, expectedFirstRecordString, expectedSecondRecordString];
+    const logSpy = getLogSpy();
 
-    MOCK_RANDOM_NUMBER(RANDOM_NUMBER);
+    mockRandomNumber(randomNumber);
 
     // when
-    const RACE = new Race(CAR_LIST, ATTEMPT_COUNT);
-    RACE.run();
+    const race = new Race(carList, attemptCount);
+    race.run();
 
     // then
-    EXPECTED_RECORD_STRING.forEach((log) => {
-      expect(LOG_SPY).toHaveBeenCalledWith(expect.stringContaining(log))
+    expectedRecordString.forEach((log) => {
+      expect(logSpy).toHaveBeenCalledWith(expect.stringContaining(log))
     })
   });
 
   test("우승자 선별할 최대 진행 횟수, 우승자 1명 반환-시도횟수 1회, 중복 우승자 존재 x", () => {
     // given
-    const CAR_LIST = ["aaa", "bbb"];
-    const ATTEMPT_COUNT = 1;
-    const RANDOM_NUMBER = [3, 4];
-    const EXPECTED_POSITION = 1;
-    const EXPECTED_WINNER = ["bbb"];
+    const carList = ["aaa", "bbb"];
+    const attemptCount = 1;
+    const randomNumber = [3, 4];
+    const expectedPosition = 1;
+    const expectedWinner = ["bbb"];
 
-    MOCK_RANDOM_NUMBER(RANDOM_NUMBER);
+    mockRandomNumber(randomNumber);
     // when
-    const RACE = new Race(CAR_LIST, ATTEMPT_COUNT);
-    RACE.updateRecord();
-    const MAX_RECORD = RACE.getWinnerPosition();
-    const WINNER = RACE.getWinnerList(MAX_RECORD);
+    const race = new Race(carList, attemptCount);
+    race.updateRecord();
+    const maxRecord = race.getWinnerPosition();
+    const winner = race.getWinnerList(maxRecord);
 
     // then
-    expect(MAX_RECORD).toBe(EXPECTED_POSITION);
-    expect(WINNER.length).toBe(1);
-    expect(WINNER).toEqual(expect.arrayContaining(EXPECTED_WINNER))
-    expect(WINNER[0]).toBe(EXPECTED_WINNER[0]);
+    expect(maxRecord).toBe(expectedPosition);
+    expect(winner.length).toBe(1);
+    expect(winner).toEqual(expect.arrayContaining(expectedWinner))
+    expect(winner[0]).toBe(expectedWinner[0]);
   });
 
   test("우승자 선별할 최대 진행 횟수, 다수의 우승자 반환-시도횟수 3회, 중복 우승자 존재 o", () => {
     // given
-    const CAR_LIST = ["aaa", "bbb", "ccc"];
-    const ATTEMPT_COUNT = 3;
-    const RANDOM_NUMBER = [3, 4, 3, 4, 4, 3, 4, 3, 4];
-    const EXPECTED_POSITION = 2;
-    const EXPECTED_WINNER = ["aaa", "bbb"];
+    const carList = ["aaa", "bbb", "ccc"];
+    const attemptCount = 3;
+    const randomNumber = [3, 4, 3, 4, 4, 3, 4, 3, 4];
+    const expectedPosition = 2;
+    const expectedWinner = ["aaa", "bbb"];
 
-    MOCK_RANDOM_NUMBER(RANDOM_NUMBER);
+    mockRandomNumber(randomNumber);
     // when
-    const RACE = new Race(CAR_LIST, ATTEMPT_COUNT);
-    for (let i = 0; i < ATTEMPT_COUNT; i++) {
-      RACE.updateRecord();
+    const race = new Race(carList, attemptCount);
+    for (let i = 0; i < attemptCount; i++) {
+      race.updateRecord();
     }
-    const MAX_RECORD = RACE.getWinnerPosition();
-    const WINNER = RACE.getWinnerList(MAX_RECORD);
+    const maxRecord = race.getWinnerPosition();
+    const winner = race.getWinnerList(maxRecord);
 
     // then
-    expect(RACE.getWinnerPosition()).toBe(EXPECTED_POSITION);
-    expect(WINNER.length).toBe(2);
-    expect(WINNER).toEqual(expect.arrayContaining(EXPECTED_WINNER))
-    expect(WINNER[0]).toBe(EXPECTED_WINNER[0]);
-    expect(WINNER[1]).toBe(EXPECTED_WINNER[1]);
+    expect(race.getWinnerPosition()).toBe(expectedPosition);
+    expect(winner.length).toBe(2);
+    expect(winner).toEqual(expect.arrayContaining(expectedWinner))
+    expect(winner[0]).toBe(expectedWinner[0]);
+    expect(winner[1]).toBe(expectedWinner[1]);
   });
 
   test("우승자 목록 생성", () => {
     // given
-    const CAR_LIST = ["aaa", "bbb"];
-    const ATTEMPT_COUNT = 3;
-    const RANDOM_NUMBER = [0, 4, 0, 4, 0, 4];
-    const EXPECTED_RESULT = "최종 우승자 : bbb";
-    const LOG_SPY = GET_LOG_SPY();
+    const carList = ["aaa", "bbb"];
+    const attemptCount = 3;
+    const randomNumber = [0, 4, 0, 4, 0, 4];
+    const expectedResult = "최종 우승자 : bbb";
+    const logSpy = getLogSpy();
 
-    MOCK_RANDOM_NUMBER(RANDOM_NUMBER);
+    mockRandomNumber(randomNumber);
     // when
-    const RACE = new Race(CAR_LIST, ATTEMPT_COUNT);
-    RACE.run();
+    const race = new Race(carList, attemptCount);
+    race.run();
 
     // then
-    expect(LOG_SPY).toHaveBeenLastCalledWith(EXPECTED_RESULT);
+    expect(logSpy).toHaveBeenLastCalledWith(expectedResult);
   });
 
   test("여러명의 우승자 목록 생성", () => {
     // given
-    const CAR_LIST = ["aaa", "bbb", "ccc", "ddd"];
-    const ATTEMPT_COUNT = 3;
-    const RANDOM_NUMBER = [4, 4, 4, 0, 4, 4, 4, 0, 4, 4, 4, 0];
-    const EXPECTED_RESULT = "최종 우승자 : aaa, bbb, ccc";
-    const LOG_SPY = GET_LOG_SPY();
+    const carList = ["aaa", "bbb", "ccc", "ddd"];
+    const attemptCount = 3;
+    const randomNumber = [4, 4, 4, 0, 4, 4, 4, 0, 4, 4, 4, 0];
+    const expectedResult = "최종 우승자 : aaa, bbb, ccc";
+    const logSpy = getLogSpy();
 
-    MOCK_RANDOM_NUMBER(RANDOM_NUMBER);
+    mockRandomNumber(randomNumber);
     // when
-    const RACE = new Race(CAR_LIST, ATTEMPT_COUNT);
-    RACE.run();
+    const race = new Race(carList, attemptCount);
+    race.run();
 
     // then
-    expect(LOG_SPY).toHaveBeenLastCalledWith(EXPECTED_RESULT);
+    expect(logSpy).toHaveBeenLastCalledWith(expectedResult);
   });
 });
