@@ -100,28 +100,35 @@ describe("레이스", () => {
     })
   });
 
-  test("우승자 선별할 최대 진행 횟수 반환-시도횟수 1회, 중복 우승자 존재 x", () => {
+  test("우승자 선별할 최대 진행 횟수, 우승자 1명 반환-시도횟수 1회, 중복 우승자 존재 x", () => {
     // given
     const CAR_LIST = ["aaa", "bbb"];
     const ATTEMPT_COUNT = 1;
     const RANDOM_NUMBER = [3, 4];
     const EXPECTED_POSITION = 1;
+    const EXPECTED_WINNER = ["bbb"];
 
     MOCK_RANDOM_NUMBER(RANDOM_NUMBER);
     // when
     const RACE = new Race(CAR_LIST, ATTEMPT_COUNT);
     RACE.updateRecord();
+    const MAX_RECORD = RACE.getWinnerPosition();
+    const WINNER = RACE.getWinnerList(MAX_RECORD);
 
     // then
-    expect(RACE.getWinnerPosition()).toBe(EXPECTED_POSITION);
+    expect(MAX_RECORD).toBe(EXPECTED_POSITION);
+    expect(WINNER.length).toBe(1);
+    expect(WINNER).toEqual(expect.arrayContaining(EXPECTED_WINNER))
+    expect(WINNER[0]).toBe(EXPECTED_WINNER[0]);
   });
 
-  test("우승자 선별할 최대 진행 횟수 반환-시도횟수 3회, 중복 우승자 존재 o", () => {
+  test("우승자 선별할 최대 진행 횟수, 다수의 우승자 반환-시도횟수 3회, 중복 우승자 존재 o", () => {
     // given
     const CAR_LIST = ["aaa", "bbb", "ccc"];
     const ATTEMPT_COUNT = 3;
     const RANDOM_NUMBER = [3, 4, 3, 4, 4, 3, 4, 3, 4];
     const EXPECTED_POSITION = 2;
+    const EXPECTED_WINNER = ["aaa", "bbb"];
 
     MOCK_RANDOM_NUMBER(RANDOM_NUMBER);
     // when
@@ -129,9 +136,15 @@ describe("레이스", () => {
     for (let i = 0; i < ATTEMPT_COUNT; i++) {
       RACE.updateRecord();
     }
+    const MAX_RECORD = RACE.getWinnerPosition();
+    const WINNER = RACE.getWinnerList(MAX_RECORD);
 
     // then
     expect(RACE.getWinnerPosition()).toBe(EXPECTED_POSITION);
+    expect(WINNER.length).toBe(2);
+    expect(WINNER).toEqual(expect.arrayContaining(EXPECTED_WINNER))
+    expect(WINNER[0]).toBe(EXPECTED_WINNER[0]);
+    expect(WINNER[1]).toBe(EXPECTED_WINNER[1]);
   });
 
   test("우승자 목록 생성", () => {
