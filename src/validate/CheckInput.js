@@ -1,23 +1,24 @@
 export class CheckInput {
-  carList(carList) {
-    const isValidLength = carList.length > 1;
-    const isValidCarName = carList.every((car) => {
-      return car.length <= 5 && car.length > 0;
-    });
-    const isUniqueCarName = carList.length === new Set(carList).size;
-    const isValid = isValidLength && isValidCarName && isUniqueCarName;
 
-    if (isValid === false) {
+  carList(carList) {
+    const isLessThenTwoCar = carList.length < 2;
+    const isCarNameTooLong = carList.some((car) => {
+      return car.length >= 6 || car.length === 0;
+    });
+    const isNotUniqueCarName = carList.length > new Set(carList).size;
+    const isInValid = isLessThenTwoCar || isCarNameTooLong || isNotUniqueCarName;
+
+    if (isInValid) {
       throw new Error("[ERROR]");
     }
   }
 
   attemptCount(attemptCount) {
-    const isNaN = Number.isNaN(attemptCount);
+    const isNotNumber = Number.isNaN(attemptCount);
     const isTooSmall = attemptCount <= 0;
     const isDicimal = Math.floor(attemptCount) !== attemptCount || Math.ceil(attemptCount) !== attemptCount;
 
-    if (isNaN || isTooSmall || isDicimal) {
+    if (isNotNumber || isTooSmall || isDicimal) {
       throw new Error("[ERROR]");
     }
   }
