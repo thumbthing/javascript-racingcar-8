@@ -44,16 +44,20 @@ export class Race {
     return WINNER_RECORD;
   }
 
-  // 우승자 선별
-  getWinner() {
-    const MAX_RECORD = this.getWinnerPosition();
+  // 우승자 명단 생성
+  getWinnerList(winnerRecord) {
     const WINNER = [];
     this.carList.forEach((car) => {
       const RECORD = this.raceRecord.get(car);
-      if (RECORD.length === MAX_RECORD) {
-        WINNER.push(car);
-      }
+      if (RECORD.length === winnerRecord) WINNER.push(car);
     });
+    return WINNER;
+  }
+
+  // 우승자 선별
+  getWinner() {
+    const MAX_RECORD = this.getWinnerPosition();
+    const WINNER = this.getWinnerList(MAX_RECORD);
     const RESULT_STRING = `최종 우승자 : ${WINNER.join(', ')}`;
     Console.print(RESULT_STRING);
   }
