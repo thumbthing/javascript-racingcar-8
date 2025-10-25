@@ -100,6 +100,40 @@ describe("레이스", () => {
     })
   });
 
+  test("우승자 선별할 최대 진행 횟수 반환-시도횟수 1회, 중복 우승자 존재 x", () => {
+    // given
+    const CAR_LIST = ["aaa", "bbb"];
+    const ATTEMPT_COUNT = 1;
+    const RANDOM_NUMBER = [3, 4];
+    const EXPECTED_POSITION = 1;
+
+    MOCK_RANDOM_NUMBER(RANDOM_NUMBER);
+    // when
+    const RACE = new Race(CAR_LIST, ATTEMPT_COUNT);
+    RACE.updateRecord();
+
+    // then
+    expect(RACE.getWinnerPosition()).toBe(EXPECTED_POSITION);
+  });
+
+  test("우승자 선별할 최대 진행 횟수 반환-시도횟수 3회, 중복 우승자 존재 o", () => {
+    // given
+    const CAR_LIST = ["aaa", "bbb", "ccc"];
+    const ATTEMPT_COUNT = 3;
+    const RANDOM_NUMBER = [3, 4, 3, 4, 4, 3, 4, 3, 4];
+    const EXPECTED_POSITION = 2;
+
+    MOCK_RANDOM_NUMBER(RANDOM_NUMBER);
+    // when
+    const RACE = new Race(CAR_LIST, ATTEMPT_COUNT);
+    for (let i = 0; i < ATTEMPT_COUNT; i++) {
+      RACE.updateRecord();
+    }
+
+    // then
+    expect(RACE.getWinnerPosition()).toBe(EXPECTED_POSITION);
+  });
+
   test("우승자 목록 생성", () => {
     // given
     const CAR_LIST = ["aaa", "bbb"];
