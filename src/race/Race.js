@@ -37,10 +37,16 @@ export class Race {
     return RECORD_STRING;
   }
 
+  // 우승자 위치 반환
+  getWinnerPosition() {
+    const RECORD_POSITION = [...this.raceRecord.values()].map((record) => record.length);
+    const WINNER_RECORD = Math.max(...RECORD_POSITION);
+    return WINNER_RECORD;
+  }
+
   // 우승자 선별
   getWinner() {
-    const RECORD_COUNT = [...this.raceRecord.values()].map((record) => record.length);
-    const MAX_RECORD = Math.max(...RECORD_COUNT);
+    const MAX_RECORD = this.getWinnerPosition();
     const WINNER = [];
     this.carList.forEach((car) => {
       const RECORD = this.raceRecord.get(car);
