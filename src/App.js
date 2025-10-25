@@ -6,24 +6,24 @@ import { CheckInput } from "./validate/CheckInput.js";
 class App {
   async run() {
     // 기능 인스턴스화
-    const INPUT = new UserInput();
-    const PARSE = new ParseInput();
-    const CHECK_INPUT = new CheckInput();
+    const userInput = new UserInput();
+    const parser = new ParseInput();
+    const checkValidate = new CheckInput();
 
     // 입력 -> 변환 -> 검증
     // 자동차 이름
-    const CAR_INPUT = await INPUT.getCarName();
-    const CAR_LIST = PARSE.getCarList(CAR_INPUT);
-    CHECK_INPUT.carName(CAR_LIST);
+    const carInput = await userInput.getCarName();
+    const carList = parser.parseCarList(carInput);
+    checkValidate.carList(carList);
 
     // 시도 횟수
-    const ATTEMPT_INPUT = await INPUT.getRaceCount();
-    const ATTEMPT_COUNT = PARSE.getAttempts(ATTEMPT_INPUT);
-    CHECK_INPUT.attemptCount(ATTEMPT_COUNT);
+    const attemptInput = await userInput.getRaceCount();
+    const attemptCount = parser.parseAttempts(attemptInput);
+    checkValidate.attemptCount(attemptCount);
 
     // 레이스 실행
-    const RACE = new Race(CAR_LIST, ATTEMPT_COUNT);
-    RACE.run();
+    const race = new Race(carList, attemptCount);
+    race.run();
   }
 }
 
