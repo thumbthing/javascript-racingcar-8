@@ -3,13 +3,22 @@
 ## 테스트 목록
 
 1. 입력
-    - `getCarName()`
-    - `getRaceCount()`
+    - [`getCarName()`](#getcarname)
+    - [`getRaceCount()`](#getracecount)
 2. 변환
-    - `getCarList()`
-    - `getAttempts()`
+    - [`parseCarList()`](#parsecarlist)
+    - [`parseAttempts()`](#parseattempts)
 3. 유효성
-    - `carName()`
+    - [`carList()`](#carlist)
+    - [`attemptCount()`](#attemptcount)
+4. 실행
+    - [`getCondition()`](#getcondition)
+    - [`updateRecord()`](#updaterecord)
+    - [`createRecordString()`](#createrecordstring)
+    - [`getWinnerPosition()`](#getwinnerposition-getwinnerlist)
+    - [`getWinnerList()`](#getwinnerposition-getwinnerlist)
+    - [`getWinner()`](#getwinner)
+    - [`run()`](#run)
 
 ### Input
 
@@ -25,11 +34,11 @@
 
 ### Parse
 
-#### `getCarList()`
+#### `parseCarList()`
 
 - 입력 값을 변환된 배열로 반환
 
-#### `getAttempts()`
+#### `parseAttempts()`
 
 - 입력 값을 숫자로 형변환
 
@@ -37,9 +46,10 @@
 
 ### Valid
 
-#### `carName()`
+#### `carList()`
 
 - 빈값, 2개 미만의 자동차 이름에 대한 `Error throw`
+- 2개 이상의 자동차 이름 입력시 유효성 통과
 - 중복된 자동차 이름에 대한 `Error throw`
 - 요소 내에 5글자 이상의 자동차 이름에 대한 `Error throw`
 - 요소 내에 빈 문자열의 자동차 이름에 대한 `Error throw`
