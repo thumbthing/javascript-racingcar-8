@@ -66,6 +66,13 @@
     - 배열내 요소 중 하나라도 글자수 6 이상, 0 이하일 경우
     - 배열의 길이가 `new Set().size`로 중복 요소 제거된 길이보다 길 경우
 
+### `updateErrorStatusByAttempt()` : 시도 횟수 입력값으로 필드 최신화
+
+1. `notNumber, tooSmall, decimal`의 value를 최신화한다
+    - 변환된 값이 `NaN`인 경우
+    - 변환된 값이 0 이하일 경우
+    - 변환된 값이 소수일 경우
+
 ### `carList(변환된 자동차 이름 배열)` : 자동차 입력값 검증
 
 1. `errorStatus.keys()`로 key로 이루어진 배열을 복사하여 생성한다
@@ -79,11 +86,14 @@
 
 ### `attemptCount(변환된 시도 횟수)` : 시도 횟수 입력값 검증
 
-1. `Number`로 변환된 입력값을 검사한다.
-    - `NaN`인 경우
-    - 0 보다 작은 경우
-    - 소수인 경우
-2. 검사한 3개의 항목중에 하나라도 해당할 경우 Error를 생성하고 `throw` 한다
+1. `errorStatus.keys()`로 key로 이루어진 배열을 복사하여 생성한다
+2. `updateErrorStatusByAttempt()`로 필드값을 최신화한다
+3. `Array.some()`으로 복사된 배열을 순회한다
+    - 최신화된 필드값중에 `true` 값이 존재하는지 확인한다
+    - 필드의 value 값중에 `true`가 존재할 경우
+    - 화면에 전역 상수로 선언한 `INPUT_ERROR`의 value 값을 출력한다
+    - `intializeStatus()`로 최신화된 필드값을 초기화한다
+    - `[ERROR]`를 throw 한다
 
 ---
 
