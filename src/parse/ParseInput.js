@@ -1,11 +1,11 @@
 export class ParseInput {
-  getCarList(input) {
-    const CAR_LIST = input.split(',');
-    return CAR_LIST;
+  parseCarList(input) {
+    const carList = input.split(',');
+    return carList;
   }
 
-  getAttempts(input) {
-    const ATTEMPT_COUNT = Number(input);
-    return ATTEMPT_COUNT;
+  parseAttempts(input) {
+    const attemptCount = Number(input);
+    return attemptCount;
   }
 }
